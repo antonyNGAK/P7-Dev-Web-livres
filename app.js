@@ -1,5 +1,6 @@
 
-const express = require ('express')
+const express = require ('express');
+const bodyParser = require ('body-parser');
 const mongoose = require ('mongoose');
 
 
@@ -19,10 +20,9 @@ app.use((req, res, next) => {
     next();
 });
 //connection à la base de donnée mongoDB
-mongoose.connect ('mongodb+srv://antonyngakosso63 :boNjour1@cluster0.zf09ttp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',{
-        useNewUrlParset: true,
-        useUnifiedTopolgy: true
-    })
+mongoose.connect ('mongodb+srv://anto:boNjour1@cluster0.zf09ttp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',{
+        useNewUrlParser: true,
+        useUnifiedTopology: true})
     .then(() => console.log('connexion à la base de données réussi!'))
     .catch(() => console.log('Echec de connexion à la base de données!'));
 
