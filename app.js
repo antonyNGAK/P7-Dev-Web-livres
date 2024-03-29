@@ -6,8 +6,8 @@ const mongoose = require ('mongoose');
 
 
 //Routage
-//const booksRoutes = require('./routes/books');
-//const usersRoutes = require('./routes/user');
+const booksRoutes = require('./routes/books');
+const userRoutes = require('./routes/user');
 
 //Déclaration de l'app express
 const app = express();
@@ -29,5 +29,9 @@ mongoose.connect ('mongodb+srv://anto:boNjour1@cluster0.zf09ttp.mongodb.net/?ret
 app.use(express.json());
 
 
+//liens des différentes routes
+app.use('/api/books', booksRoutes);
+app.use('/api/auth', userRoutes);
+app.use('pictures', express.static(path.join(__dirname, 'pictures')));
 
 module.exports = app;
