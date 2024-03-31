@@ -1,9 +1,12 @@
 const express = require ('express');
 const router = express.Router();
+const multer = require('../middleware/config-multer');
 
 
-const booksControle = require('../controleurs/books');
 const auth = require('../middleware/auth');
+const booksControle = require('../controleurs/books');
+
+//Méthode CRUD
 
 router.get('/', booksControle.getAllBooks);
 router.get('/bestrating', booksControle.getBestRatings);
