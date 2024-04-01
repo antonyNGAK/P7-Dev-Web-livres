@@ -20,7 +20,7 @@ exports.signup = (req, res, next) => {
     }
 
     //Création d'un nouvel utilisateurs après le hashage du mot de passe
-    
+
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
@@ -28,7 +28,7 @@ exports.signup = (req, res, next) => {
                 password: hash
             });
             user.save()
-                .then(() => res.status(201).json({ message: 'utilisateur créé' }))
+                .then(() => res.status(201).json({ message: 'utilisateur créé !' }))
                 .catch(error => res.status(400).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
