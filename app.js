@@ -2,15 +2,24 @@
 const express = require ('express');
 const bodyParser = require ('body-parser');
 const mongoose = require ('mongoose');
+const mongoSanitize = require('express-mongo-sanitize');
 
 
 
 //Routage
 const booksRoutes = require('./routes/books');
 const userRoutes = require('./routes/user');
+const rateLimit = require('express-rate-limit');
 
 //Déclaration de l'app express
 const app = express();
+
+const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000, 
+    max: 100, 
+    standardHeaders: true, 
+    legacyHeaders: false, 
+})
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -27,6 +36,12 @@ mongoose.connect ('mongodb+srv://anto:boNjour1@cluster0.zf09ttp.mongodb.net/?ret
     .catch(() => console.log('Echec de connexion à la base de données!'));
 
 app.use(express.json());
+
+app.use(mongoSanitize({
+    replaceWith: '_',
+}));
+
+app.use('/api/', limiter);
 
 
 //liens des différentes routes
