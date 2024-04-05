@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const User = require('../models/user');
+const User = require('../models/User');
 
 exports.signup = (req, res, next) => {
     const { email, password } = req.body;
@@ -33,7 +33,7 @@ exports.signup = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error }));
 };
-
+//Logique de connexion avec méthode de cryptage
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
@@ -49,7 +49,7 @@ exports.login = (req, res, next) => {
                                 userId: user._id,
                                 token: jwt.sign(
                                     { userId: user._id },
-                                    process.env.SECRET_KEY,
+                                    process.env.KEY_SECRET,
                                     { expiresIn: '24h' },
                                 )
                             });

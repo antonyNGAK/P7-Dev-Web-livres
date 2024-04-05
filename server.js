@@ -1,5 +1,5 @@
-const http = require('http');
-const app = require('./app');
+ const http = require('http');
+ const app = require('./app');
 
 
 const normalizePort = val => {
@@ -24,11 +24,11 @@ const adminError = error => {
     const bind = typeof address === 'string' ? 'pipe' + address : 'port:' + port;
     switch (error.code) {
         case 'EACCES':
-            console.error(bind + ' requires elevated privileges.');
+            console.error(bind + 'Vous ne posséder pas les accès nécessaire .');
             process.exit(1);
             break;
         case 'EADDRINUSE':
-            console.error(bind + ' is already in use.');
+            console.error(bind + ' prêt à être utiliser.');
             process.exit(1);
             break;
         default:

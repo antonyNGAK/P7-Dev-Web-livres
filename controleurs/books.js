@@ -19,7 +19,7 @@ exports.createBook = (req, res, next) => {
     //sauvegarde d'un nouveaux livre
 
     book.save()
-        .then(() => res.status(201).json({ message: 'Nouveau livre créer abvec succès !' }))
+        .then(() => res.status(201).json({ message: 'Nouveau livre créer avec succès !' }))
         .catch(error => res.status(400).json({ error }));
 };
 
@@ -52,7 +52,7 @@ exports.ratingBook = (req, res, next) => {
                 return res.status(400).json({ message: 'Vous ne pouvez plus noté ce livre' });
             } else {
                 book.ratings.push(updatedRating); 
-                //La somme des notes étant la moyenne on multiplie par la note la plus haute, puis on soustrait la nouvelle valeur
+                //La somme des notes étant la moyenne on multiplié par la note la plus haute, puis on soustrait la nouvelle valeur
                 book.averageRating = (book.averageRating * (book.ratings.length - 1) + updatedRating.grade) / book.ratings.length;
                 return book.save();
             }
@@ -62,7 +62,7 @@ exports.ratingBook = (req, res, next) => {
 }
 
 
-
+//Logique de modification des livres
 exports.modifyBook = (req, res, next) => {
   
     const bookObject = req.file ? {

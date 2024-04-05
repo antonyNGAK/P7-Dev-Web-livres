@@ -1,7 +1,7 @@
-
 const express = require ('express');
 const mongoose = require ('mongoose');
 const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
 const path = require('path');
 require('dotenv').config();
 
@@ -30,9 +30,10 @@ app.use((req, res, next) => {
     next();
 });
 //connection à la base de donnée mongoDB
-mongoose.connect ('mongodb+srv://anto:boNjour1@cluster0.zf09ttp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',{
-        useNewUrlParser: true,
-        useUnifiedTopology: true})
+mongoose.connect (process.env.URL_DB//,{
+        //useNewUrlParser: false,
+        //useUnifiedTopology: true})
+)
     .then(() => console.log('connexion à la base de données réussi!'))
     .catch(() => console.log('Echec de connexion à la base de données!'));
 
@@ -42,12 +43,18 @@ app.use(mongoSanitize({
     replaceWith: '_',
 }));
 
+app.use(helmet({
+    xDownloadOptions: false,
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: false,
+}));
+
 app.use('/api/', limiter);
 
 
 //liens des différentes routes
 app.use('/api/books', booksRoutes);
 app.use('/api/auth', userRoutes);
-app.use('pictures', express.static(path.join(__dirname, 'pictures')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;

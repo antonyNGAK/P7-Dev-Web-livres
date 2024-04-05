@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     
         const token = req.headers.authorization.split(' ')[1];
         
-        const decodedToken = jwt.verify(token, process.env.SECRET_KEY); //Déchiffrage du Token
+        const decodedToken = jwt.verify(token, process.env.KEY_SECRET); //Déchiffrage du Token
         
         //Capter l'Identifiant le sauvegarder et renvoyer une erreur en cas d'absence
 
