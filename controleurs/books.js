@@ -13,7 +13,7 @@ module.exports.createBook = (req, res) => {
         userId: req.auth.userId,
         ratings: [],
         averageRating: 0, 
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/${req.file.filename}`
     });
 
     //sauvegarde d'un nouveaux livre
@@ -68,7 +68,7 @@ module.exports.modifyBook = (req, res, next) => {
     const bookObject = req.file ? {
         
         ...JSON.parse(req.body.book),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/${req.file.filename}`
     } : { ...req.body };
     Book.findOne({ _id: req.params.id })
         .then((book) => {

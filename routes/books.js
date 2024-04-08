@@ -1,6 +1,7 @@
 const express = require ('express');
 const router = express.Router();
 const multer = require('../middleware/config-multer');
+const sharp = require("../middleware/sharp");
 
 
 const auth = require('../middleware/auth');
@@ -10,9 +11,9 @@ const booksControle = require('../controleurs/books');
 
 router.get('/', booksControle.getAllBooks);
 router.get('/bestrating', booksControle.getBestRatings);
-router.post('/', auth, multer.upload, /*multer.optimize,*/ booksControle.createBook);
+router.post('/', auth, multer.upload.single("image"), /*sharp,*/ booksControle.createBook);
 router.get('/:id', booksControle.getOneBook);
-router.put('/:id', auth, multer.upload, /*multer.optimize,*/ booksControle.modifyBook);
+router.put('/:id', auth, multer.upload.single("image"), /*sharp,*/ booksControle.modifyBook);
 router.delete('/:id', auth, booksControle.deleteBook);
 router.post('/:id/rating', auth, booksControle.ratingBook);
 
