@@ -24,21 +24,22 @@ const limiter = rateLimit({
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Cross-Origin-Resource-Policy', 'same-site');
+    //res.setHeader('Cross-Origin-Resource-Policy', 'same-site');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
 //connection à la base de donnée mongoDB
-mongoose.connect (process.env.URL_DB//,{
-        //useNewUrlParser: false,
-        //useUnifiedTopology: true})
-)
+
+mongoose.connect (process.env.URL_DB)
+
     .then(() => console.log('connexion à la base de données réussi!'))
     .catch(() => console.log('Echec de connexion à la base de données!'));
 
 app.use(express.json());
 
+//gestion des espaces
 app.use(mongoSanitize({
     replaceWith: '_',
 }));

@@ -17,7 +17,7 @@ const port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 const adminError = error => {
-    if (error.syscall !== 'listen'){
+    if (error.syscall !== 'listen') {
         throw error;
     }
     const address = server.address();

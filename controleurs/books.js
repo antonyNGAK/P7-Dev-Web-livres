@@ -2,7 +2,7 @@ const Book = require('../models/Book');
 const fs = require('fs');
 
 // Ajout d'un nouveau Livre
-exports.createBook = (req, res, next) => {
+module.exports.createBook = (req, res) => {
     
     const bookObject = JSON.parse(req.body.book);
     
@@ -13,7 +13,7 @@ exports.createBook = (req, res, next) => {
         userId: req.auth.userId,
         ratings: [],
         averageRating: 0, 
-        imageUrl: `${req.protocol}://${req.get('host')}/images/opt_${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/public_${req.file.filename}`
     });
 
     //sauvegarde d'un nouveaux livre
@@ -25,7 +25,7 @@ exports.createBook = (req, res, next) => {
 
 //Vérification des données introduite à propos des livres
 
-exports.getOneBook = (req, res, next) => {
+module.exports.getOneBook = (req, res, next) => {
     Book.findOne({ _id: req.params.id })
         .then((book) => res.status(200).json(book))
         .catch(error => res.status(404).json({ error }));
@@ -33,7 +33,7 @@ exports.getOneBook = (req, res, next) => {
 
 //Avis sur les livres
 
-exports.ratingBook = (req, res, next) => {
+module.exports.ratingBook = (req, res, next) => {
     const updatedRating = {
         userId: req.auth.userId,
         grade: req.body.rating
@@ -59,11 +59,11 @@ exports.ratingBook = (req, res, next) => {
         })
         .then((updatedBook) => res.status(201).json(updatedBook))
         .catch(error => res.status(400).json({ error }));
-}
+};
 
 
 //Logique de modification des livres
-exports.modifyBook = (req, res, next) => {
+module.exports.modifyBook = (req, res, next) => {
   
     const bookObject = req.file ? {
         
@@ -99,7 +99,7 @@ exports.modifyBook = (req, res, next) => {
 
 //Suppression de livre
 
-exports.deleteBook = (req, res, next) => {
+module.exports.deleteBook = (req, res, next) => {
     Book.findOne({ _id: req.params.id })
         .then((book) => {
            
@@ -123,7 +123,7 @@ exports.deleteBook = (req, res, next) => {
 };
 
 //Ajourt de tout les Livres
-exports.getAllBooks = (req, res, next) => {
+module.exports.getAllBooks = (req, res, next) => {
     Book.find()
         .then((books) => res.status(200).json(books))
         .catch(error => res.status(400).json({ error }));
@@ -137,4 +137,4 @@ exports.getBestRatings = (req, res, next) => {
         .limit(3) 
         .then((bestBooks) => res.status(200).json(bestBooks))//Retourne les trois meilleurs livres les mieux notés"
         .catch(error => res.status(400).json({ error }));
-}
+};
