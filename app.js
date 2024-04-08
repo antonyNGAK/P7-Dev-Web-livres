@@ -15,6 +15,7 @@ const rateLimit = require('express-rate-limit');
 //Déclaration de l'app express
 const app = express();
 
+//module rateLimite
 const limiter = rateLimit({
     windowMs: 10 * 60 * 1000, 
     max: 100, 
@@ -22,9 +23,10 @@ const limiter = rateLimit({
     legacyHeaders: false, 
 })
 
+//Cors
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    //res.setHeader('Cross-Origin-Resource-Policy', 'same-site');
+    res.setHeader('Cross-Origin-Resource-Policy', 'same-site');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
@@ -44,12 +46,14 @@ app.use(mongoSanitize({
     replaceWith: '_',
 }));
 
+//Module helmet, opt de sécurité supp
 app.use(helmet({
     xDownloadOptions: false,
     crossOriginEmbedderPolicy: false,
     crossOriginResourcePolicy: false,
 }));
 
+//Application de rateLimite grâce à la variable Limiter
 app.use('/api/', limiter);
 
 

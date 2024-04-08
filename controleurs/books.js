@@ -13,7 +13,7 @@ module.exports.createBook = (req, res) => {
         userId: req.auth.userId,
         ratings: [],
         averageRating: 0, 
-        imageUrl: `${req.protocol}://${req.get('host')}/images/public_${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
 
     //sauvegarde d'un nouveaux livre
@@ -40,7 +40,7 @@ module.exports.ratingBook = (req, res, next) => {
     };
     
     if (updatedRating.grade < 0 || updatedRating.grade > 5) {
-        return res.status(400).json({ message: 'Veuillez attribué une note entre 0 et 5' });
+        return res.status(400).json({ message: 'Veuillez attribué une note entre 0 et 5 étoiles' });
     }
     
     Book.findOne({ _id: req.params.id })
@@ -68,7 +68,7 @@ module.exports.modifyBook = (req, res, next) => {
     const bookObject = req.file ? {
         
         ...JSON.parse(req.body.book),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/opt_${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
     Book.findOne({ _id: req.params.id })
         .then((book) => {
