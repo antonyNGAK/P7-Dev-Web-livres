@@ -10,9 +10,9 @@ module.exports.createBook = (req, res) => {
 
     const book = new Book({
         ...bookObject,
-        userId: req.auth.userId,
-        ratings: [],
-        averageRating: 0, 
+        //userId: req.auth.userId,
+        //ratings: [],
+        //averageRating: 0, 
         imageUrl: `${req.protocol}://${req.get('host')}/${req.file.filename}`
     });
 
@@ -52,7 +52,7 @@ module.exports.ratingBook = (req, res, next) => {
                 return res.status(400).json({ message: 'Vous ne pouvez plus noté ce livre' });
             } else {
                 book.ratings.push(updatedRating); 
-                //La somme des notes étant la moyenne on multiplié par la note la plus haute, puis on soustrait la nouvelle valeur
+                //La somme des notes étant la moyenne on multiplie par la note la plus haute, puis on soustrait la nouvelle valeur
                 book.averageRating = (book.averageRating * (book.ratings.length - 1) + updatedRating.grade) / book.ratings.length;
                 return book.save();
             }
